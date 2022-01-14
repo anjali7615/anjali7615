@@ -1,0 +1,18 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|public|\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1 [L]
+# ALLOW ONLY NECESSARY REQUEST METHODS
+RewriteCond %{REQUEST_METHOD} !^(GET|POST) [NC]
+RewriteRule .* - [F,L]
+
+<FilesMatch "\.(ttf|otf|eot|woff|jpg|png|jpeg|gif|js|json|html|css)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+</FilesMatch>
+
+#RedirectMatch 403 ^/folder/.?$
+#RewriteRule ^folder/?$ - [F,L]
+#SetEnv CI_ENVIRONMENT production
